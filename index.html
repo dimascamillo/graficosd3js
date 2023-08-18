@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  #empresaMarcaModeloContainer {
+    max-width: 900px;
+    overflow: auto;
+  }
+
+  svg {
+    width: 2080px;
+    height: 245px;
+  }
+
+  .separate {
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div id="empresaMarcaModeloContainer"></div>
+  <script src="d3.v7.js"></script>
+  <script>
+    let dados = [
+      {
+        name: "CRASA",
+        mercedez: 10,
+        scania: 7,
+        dina: 5,
+        masa: 17,
+        volvo: 99,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "CCA",
+        mercedez: 2,
+        scania: 1,
+        dina: 4,
+        masa: 2,
+        volvo: 90,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "CE4",
+        mercedez: 1,
+        scania: 9,
+        dina: 3,
+        masa: 8,
+        volvo: 78,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "CISA",
+        mercedez: 68,
+        scania: 3,
+        dina: 9,
+        masa: 22,
+        volvo: 78,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "COPATTSA",
+        mercedez: 43,
+        scania: 112,
+        dina: 45,
+        masa: 3,
+        volvo: 43,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "COPSA",
+        mercedez: 23,
+        scania: 66,
+        dina: 7,
+        masa: 1,
+        volvo: 33,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "COR3NSA",
+        mercedez: 22,
+        scania: 35,
+        dina: 11,
+        masa: 98,
+        volvo: 15,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "CTT",
+        mercedez: 32,
+        scania: 53,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "CURVIX",
+        mercedez: 4,
+        scania: 7,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "MIVSA",
+        mercedez: 11,
+        scania: 22,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "OL7",
+        mercedez: 8,
+        scania: 33,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "RECSA",
+        mercedez: 23,
+        scania: 8,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "RTP",
+        mercedez: 76,
+        scania: 3,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "SKYBUS",
+        mercedez: 67,
+        scania: 44,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+      },
+      {
+        name: "S9A",
+        mercedez: 12,
+        scania: 43,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "LAO",
+        mercedez: 1,
+        scania: 99,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+      {
+        name: "LAO",
+        mercedez: 44,
+        scania: 4,
+        dina: 5,
+        masa: 17,
+        volvo: 123,
+        modeloVolvo: "B270F",
+        modeloMasa: "Modelo 1",
+        modeloDina: "Modelo 2",
+        modeloScania: "Linner 12",
+        modeloMercedez: "Linner 121",
+      },
+    ];
+
+    var width = 2500;
+    var height = 250;
+
+    let grafico = d3
+      .select("#empresaMarcaModeloContainer")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    let barsVolvo = grafico
+      .selectAll("#bars-volvo")
+      .data(dados)
+      .enter()
+      .append("g");
+
+    let barsMasa = grafico
+      .selectAll("#bars-masa")
+      .data(dados)
+      .enter()
+      .append("g");
+
+    let barsDina = grafico
+      .selectAll("#bars-dina")
+      .data(dados)
+      .enter()
+      .append("g");
+
+    let barsScania = grafico
+      .selectAll("#bars-scania")
+      .data(dados)
+      .enter()
+      .append("g");
+
+    let barsMercedez = grafico
+      .selectAll("#bars-mercedez")
+      .data(dados)
+      .enter()
+      .append("g");
+
+    barsVolvo
+      .append("rect")
+      .attr("y", -220)
+      .attr("x", (d, i) => {
+        return -i * 120 - 30;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.volvo)
+      .attr("fill", "#E35F2E");
+
+    barsMasa
+      .append("rect")
+      .attr("y", -220)
+      .attr("x", (d, i) => {
+        return -i * 120 - 50;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.masa)
+      .attr("fill", "#F78536");
+
+    barsDina
+      .append("rect")
+      .attr("y", -220)
+      .attr("x", (d, i) => {
+        return -i * 120 - 70;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.dina)
+      .attr("fill", "#FFC236");
+
+    barsScania
+      .append("rect")
+      .attr("y", -220)
+      .attr("x", (d, i) => {
+        return -i * 120 - 90;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.scania)
+      .attr("fill", "#FFC236");
+
+    barsMercedez
+      .append("rect")
+      .attr("y", -220)
+      .attr("x", (d, i) => {
+        return -i * 120 - 110;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.mercedez)
+      .attr("fill", "#EE4935");
+
+    barsVolvo
+      .append("text")
+      .attr("y", (d) => d.volvo * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 17;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .text((d) => {
+        return d.volvo !== 0 ? d.volvo : "";
+      });
+
+    barsVolvo
+      .append("text")
+      .attr("y", (d) => d.volvo * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 30;
+      })
+      .attr("fill", "#829596")
+      .attr("font-size", "9px")
+      .attr("font-weight", 600)
+      .text((d) => {
+        return d.modeloVolvo !== "" ? d.modeloVolvo : "";
+      });
+
+    barsVolvo
+      .append("text")
+      .attr("y", 240)
+      .attr("x", (d, i) => {
+        return i * 120 + 50;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        return d.name;
+      });
+
+    barsMasa
+      .append("text")
+      .attr("y", (d) => d.masa * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 38;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .text((d) => {
+        return d.masa !== 0 ? d.masa : "";
+      });
+
+    barsMasa
+      .append("text")
+      .attr("y", (d) => d.masa * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 50;
+      })
+      .attr("fill", "#829596")
+      .attr("font-size", "9px")
+      .attr("font-weight", 600)
+      .text((d) => {
+        return d.modeloMasa !== "" ? d.modeloMasa : "";
+      });
+
+    barsDina
+      .append("text")
+      .attr("y", (d) => d.dina * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 61;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .text((d) => {
+        return d.dina !== 0 ? d.dina : "";
+      });
+
+    barsDina
+      .append("text")
+      .attr("y", (d) => d.dina * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 68;
+      })
+      .attr("fill", "#829596")
+      .attr("font-size", "9px")
+      .attr("font-weight", 600)
+      .text((d) => {
+        return d.modeloDina !== "" ? d.modeloDina : "";
+      });
+
+    barsScania
+      .append("text")
+      .attr("y", (d) => d.scania * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 77;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .text((d) => {
+        return d.scania !== 0 ? d.scania : "";
+      });
+
+    barsScania
+      .append("text")
+      .attr("y", (d) => d.scania * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 83;
+      })
+      .attr("fill", "#829596")
+      .attr("font-size", "9px")
+      .attr("font-weight", 600)
+      .text((d) => {
+        return d.modeloScania !== "" ? d.modeloScania : "";
+      });
+
+    barsMercedez
+      .append("text")
+      .attr("y", (d) => d.mercedez * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 98;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .text((d) => {
+        return d.mercedez !== 0 ? d.mercedez : "";
+      });
+
+    barsMercedez
+      .append("text")
+      .attr("y", (d) => d.mercedez * -1 + 210)
+      .attr("x", (d, i) => {
+        return i * 120 + 110;
+      })
+      .attr("fill", "#829596")
+      .attr("font-size", "9px")
+      .attr("font-weight", 600)
+      .text((d) => {
+        return d.modeloMercedez !== "" ? d.modeloMercedez : "";
+      });
+
+    let separate = grafico.append("g").attr("class", "separate");
+
+    separate
+      .append("rect")
+      .attr("x", 15)
+      .attr("y", 220)
+      .attr("width", "100%")
+      .attr("height", 3)
+      .attr("fill", "red");
+  </script>
+</body>
