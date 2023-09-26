@@ -237,6 +237,18 @@
     var width = 300;
     var height = 3900;
 
+    const empresas = ["volvo, masa, dina, scania, mercedez"];
+
+    // function criaBarsGrafico(array) {
+    //   array.forEach((element) => {
+    //     grafico
+    //       .selectAll(`#${element}`)
+    //       .data(dados)
+    //       .enter()
+    //       .append("g");
+    //   });
+    // }
+
     let grafico = d3
       .select("#empresaMarcaModeloContainer")
       .append("svg")
@@ -273,6 +285,7 @@
       .enter()
       .append("g");
 
+    // Dados volvo
     barsVolvo
       .append("rect")
       .attr("y", 10)
@@ -283,50 +296,6 @@
       .attr("width", 15)
       .attr("height", (d) => d.volvo)
       .attr("fill", "#E35F2E");
-
-    barsMasa
-      .append("rect")
-      .attr("y", 10)
-      .attr("x", (d, i) => {
-        return -i * 230 - 90;
-      })
-      .attr("transform", `rotate(${-90})`)
-      .attr("width", 15)
-      .attr("height", (d) => d.masa)
-      .attr("fill", "#F78536");
-
-    barsDina
-      .append("rect")
-      .attr("y", 10)
-      .attr("x", (d, i) => {
-        return -i * 230 - 130;
-      })
-      .attr("transform", `rotate(${-90})`)
-      .attr("width", 15)
-      .attr("height", (d) => d.dina)
-      .attr("fill", "#FFC236");
-
-    barsScania
-      .append("rect")
-      .attr("y", 10)
-      .attr("x", (d, i) => {
-        return -i * 230 - 170;
-      })
-      .attr("transform", `rotate(${-90})`)
-      .attr("width", 15)
-      .attr("height", (d) => d.scania)
-      .attr("fill", "#FF982F");
-
-    barsMercedez
-      .append("rect")
-      .attr("y", 10)
-      .attr("x", (d, i) => {
-        return -i * 230 - 210;
-      })
-      .attr("transform", `rotate(${-90})`)
-      .attr("width", 15)
-      .attr("height", (d) => d.mercedez)
-      .attr("fill", "#EE4935");
 
     barsVolvo
       .append("text")
@@ -369,6 +338,20 @@
         return d.name;
       });
 
+    // Fim dados Volvo
+
+    // Dados Masa
+    barsMasa
+      .append("rect")
+      .attr("y", 10)
+      .attr("x", (d, i) => {
+        return -i * 230 - 90;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.masa)
+      .attr("fill", "#F78536");
+
     barsMasa
       .append("text")
       .attr("y", (d, i) => {
@@ -395,6 +378,21 @@
       .text((d) => {
         return d.modeloMasa !== "" ? `MASA / ${d.modeloMasa}` : "";
       });
+
+    // Fim dados Masa
+
+    // Dados Dina
+
+    barsDina
+      .append("rect")
+      .attr("y", 10)
+      .attr("x", (d, i) => {
+        return -i * 230 - 130;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.dina)
+      .attr("fill", "#FFC236");
 
     barsDina
       .append("text")
@@ -423,6 +421,20 @@
         return d.modeloDina !== "" ? `DINA / ${d.modeloDina}` : "";
       });
 
+    // Fim dados Dina
+
+    // Dados Scania
+    barsScania
+      .append("rect")
+      .attr("y", 10)
+      .attr("x", (d, i) => {
+        return -i * 230 - 170;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.scania)
+      .attr("fill", "#FF982F");
+
     barsScania
       .append("text")
       .attr("y", (d, i) => {
@@ -450,6 +462,21 @@
         return d.modeloScania !== "" ? `SCANIA / ${d.modeloScania}` : "";
       });
 
+    // Fim Dados Scania
+
+    // Dados Mercedez
+
+    barsMercedez
+      .append("rect")
+      .attr("y", 10)
+      .attr("x", (d, i) => {
+        return -i * 230 - 210;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 15)
+      .attr("height", (d) => d.mercedez)
+      .attr("fill", "#EE4935");
+
     barsMercedez
       .append("text")
       .attr("y", (d, i) => {
@@ -476,5 +503,7 @@
       .text((d) => {
         return d.modeloMercedez !== "" ? `MERCEDEZ / ${d.modeloMercedez}` : "";
       });
+
+    // Fim Dados Mercedez
   </script>
 </body>
