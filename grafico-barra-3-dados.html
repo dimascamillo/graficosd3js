@@ -45,7 +45,7 @@
         item.morte === 0 ? 10 : item.morte === 1 ? 20 : item.morte * 10 + 10,
     }));
 
-    var width = 500;
+    var width = "100%";
     var height = 220;
 
     let grafico = d3
@@ -76,7 +76,7 @@
       .append("rect")
       .attr("y", -190)
       .attr("x", (d, i) => {
-        return -i * 100 - 50;
+        return -i * 150 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
@@ -89,18 +89,18 @@
         return (-1 * d.lesoes) / 2 + 193;
       })
       .attr("x", (d, i) => {
-        return i * 100 + 25;
+        return i * 150 + 25;
       })
       .attr("fill", "white")
       .attr("font-size", "9px")
       .attr("font-weight", "bold")
       .text((d) => {
-        if (d.lesoes === 14) {
-          return 0;
-        } else if (d.lesoes === 28) {
-          return 1;
+        let base = d.lesoes / 10 - 1;
+
+        if (base === 0) {
+          return "";
         } else {
-          return d.lesoes / 10 - 1;
+          return base;
         }
       });
 
@@ -108,7 +108,7 @@
       .append("rect")
       .attr("y", (d) => -190 + d.lesoes)
       .attr("x", (d, i) => {
-        return -i * 100 - 50;
+        return -i * 150 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
@@ -119,18 +119,18 @@
       .append("text")
       .attr("y", (d) => 193 - (d.lesoes + d.semLesoes / 2))
       .attr("x", (d, i) => {
-        return i * 100 + 25;
+        return i * 150 + 25;
       })
       .attr("fill", "white")
       .attr("font-size", "9px")
       .attr("font-weight", "bold")
       .text((d) => {
-        if (d.semLesoes === 14) {
-          return 0;
-        } else if (d.semLesoes === 28) {
-          return 1;
+        let base = d.semLesoes / 10 - 1;
+
+        if (base === 0) {
+          return "";
         } else {
-          return d.semLesoes / 10 - 1;
+          return base;
         }
       });
 
@@ -138,7 +138,7 @@
       .append("rect")
       .attr("y", (d) => -190 + d.lesoes + d.semLesoes)
       .attr("x", (d, i) => {
-        return -i * 100 - 50;
+        return -i * 150 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
@@ -149,18 +149,18 @@
       .append("text")
       .attr("y", (d) => 193 - (d.lesoes + d.semLesoes + d.morte / 2))
       .attr("x", (d, i) => {
-        return i * 100 + 25;
+        return i * 150 + 25;
       })
       .attr("fill", "white")
       .attr("font-size", "9px")
       .attr("font-weight", "bold")
       .text((d) => {
-        if (d.morte === 14) {
-          return 0;
-        } else if (d.morte === 28) {
-          return 1;
+        let base = d.morte / 10 - 1;
+
+        if (base === 0) {
+          return "";
         } else {
-          return d.morte / 10 - 1;
+          return base;
         }
       });
 
@@ -175,7 +175,7 @@
       .append("text")
       .attr("y", 210)
       .attr("x", (d, i) => {
-        return i * 100 + 28;
+        return i * 150 + 28;
       })
       .attr("text-anchor", "middle")
       .attr("fill", "#829596")
