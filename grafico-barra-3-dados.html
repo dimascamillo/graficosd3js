@@ -26,22 +26,23 @@
       { name: "L3", lesoes: 2, semLesoes: 1, morte: 0 },
       { name: "L4", lesoes: 1, semLesoes: 0, morte: 1 },
       { name: "L5", lesoes: 0, semLesoes: 0, morte: 0 },
-      { name: "L6", lesoes: 0, semLesoes: 1, morte: 1 },
-      { name: "L7", lesoes: 1, semLesoes: 1, morte: 1 },
-      { name: "LT", lesoes: 2, semLesoes: 1, morte: 0 },
+      { name: "L6", lesoes: 4, semLesoes: 1, morte: 1 },
+      { name: "L7", lesoes: 1, semLesoes: 2, morte: 1 },
+      { name: "LT", lesoes: 3, semLesoes: 1, morte: 0 },
     ];
 
     const newArray = dataQtdOnibus.map((item) => ({
       ...item,
       lesoes:
-        item.lesoes === 0 ? 14 : item.lesoes === 1 ? 28 : item.lesoes * 10,
+        item.lesoes === 0 ? 10 : item.lesoes === 1 ? 20 : item.lesoes * 10 + 10,
       semLesoes:
         item.semLesoes === 0
-          ? 14
+          ? 10
           : item.semLesoes === 1
-          ? 28
-          : item.semLesoes * 10,
-      morte: item.morte === 0 ? 14 : item.morte === 1 ? 28 : item.morte * 10,
+          ? 20
+          : item.semLesoes * 10 + 10,
+      morte:
+        item.morte === 0 ? 10 : item.morte === 1 ? 20 : item.morte * 10 + 10,
     }));
 
     var width = 500;
@@ -75,34 +76,93 @@
       .append("rect")
       .attr("y", -190)
       .attr("x", (d, i) => {
-        return -i * 60 - 50;
+        return -i * 100 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
       .attr("height", (d) => d.lesoes)
       .attr("fill", "#F5B814");
 
+    barsLesoes
+      .append("text")
+      .attr("y", (d) => {
+        return (-1 * d.lesoes) / 2 + 193;
+      })
+      .attr("x", (d, i) => {
+        return i * 100 + 25;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        if (d.lesoes === 14) {
+          return 0;
+        } else if (d.lesoes === 28) {
+          return 1;
+        } else {
+          return d.lesoes / 10 - 1;
+        }
+      });
+
     barsSemLesoes
       .append("rect")
       .attr("y", (d) => -190 + d.lesoes)
       .attr("x", (d, i) => {
-        return -i * 60 - 50;
+        return -i * 100 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
       .attr("height", (d) => d.semLesoes)
       .attr("fill", "#1569DE");
 
+    barsSemLesoes
+      .append("text")
+      .attr("y", (d) => 193 - (d.lesoes + d.semLesoes / 2))
+      .attr("x", (d, i) => {
+        return i * 100 + 25;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        if (d.semLesoes === 14) {
+          return 0;
+        } else if (d.semLesoes === 28) {
+          return 1;
+        } else {
+          return d.semLesoes / 10 - 1;
+        }
+      });
+
     barsMorte
       .append("rect")
       .attr("y", (d) => -190 + d.lesoes + d.semLesoes)
       .attr("x", (d, i) => {
-        return -i * 60 - 50;
+        return -i * 100 - 50;
       })
       .attr("transform", `rotate(${180})`)
       .attr("width", 45)
       .attr("height", (d) => d.morte)
       .attr("fill", " #D53548");
+
+    barsMorte
+      .append("text")
+      .attr("y", (d) => 193 - (d.lesoes + d.semLesoes + d.morte / 2))
+      .attr("x", (d, i) => {
+        return i * 100 + 25;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        if (d.morte === 14) {
+          return 0;
+        } else if (d.morte === 28) {
+          return 1;
+        } else {
+          return d.morte / 10 - 1;
+        }
+      });
 
     let graficoLegendas = grafico
       .selectAll("#legendasQtdAutobusesPorEmpresa")
@@ -115,7 +175,7 @@
       .append("text")
       .attr("y", 210)
       .attr("x", (d, i) => {
-        return i * 60 + 28;
+        return i * 100 + 28;
       })
       .attr("text-anchor", "middle")
       .attr("fill", "#829596")
