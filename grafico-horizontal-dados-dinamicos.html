@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  /* #graficoSubIncidencias {
+    max-width: 900px;
+    overflow: auto;
+  } */
+
+  svg {
+    width: 100%;
+    height: 1000px;
+  }
+
+  .separate {
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div id="graficoSubsIncidencias"></div>
+  <script src="d3.v7.js"></script>
+  <script>
+    let dataQtdOnibus = [
+      {
+        name: "L1",
+        d1: 0,
+        d2: 0,
+        d3: 0,
+        d4: 1,
+        d5: 0,
+        d6: 0,
+        d7: 3,
+        d8: 1,
+        d9: 4,
+      },
+      {
+        name: "L2",
+        d1: 2,
+        d2: 1,
+        d3: 4,
+        d4: 1,
+        d5: 0,
+        d6: 1,
+        d7: 2,
+        d8: 1,
+        d9: 0,
+      },
+      {
+        name: "L3",
+        d1: 1,
+        d2: 0,
+        d3: 3,
+        d4: 2,
+        d5: 1,
+        d6: 1,
+        d7: 2,
+        d8: 0,
+        d9: 0,
+      },
+      {
+        name: "L4",
+        d1: 4,
+        d2: 0,
+        d3: 1,
+        d4: 2,
+        d5: 3,
+        d6: 1,
+        d7: 1,
+        d8: 1,
+        d9: 1,
+      },
+      {
+        name: "L5",
+        d1: 2,
+        d2: 3,
+        d3: 0,
+        d4: 1,
+        d5: 1,
+        d6: 3,
+        d7: 2,
+        d8: 2,
+        d9: 2,
+      },
+      {
+        name: "L6",
+        d1: 3,
+        d2: 1,
+        d3: 0,
+        d4: 2,
+        d5: 2,
+        d6: 4,
+        d7: 0,
+        d8: 0,
+        d9: 0,
+      },
+      {
+        name: "L7",
+        d1: 1,
+        d2: 0,
+        d3: 1,
+        d4: 1,
+        d5: 1,
+        d6: 2,
+        d7: 3,
+        d8: 1,
+        d9: 2,
+      },
+      {
+        name: "LT",
+        d1: 0,
+        d2: 0,
+        d3: 3,
+        d4: 3,
+        d5: 3,
+        d6: 1,
+        d7: 1,
+        d8: 2,
+        d9: 1,
+      },
+    ];
+
+    const newArray = dataQtdOnibus.map((item) => ({
+      ...item,
+      d1: item.d1 === 0 ? 10 : item.d1 === 1 ? 20 : item.d1 * 10 + 10,
+      d2: item.d2 === 0 ? 10 : item.d2 === 1 ? 20 : item.d2 * 10 + 10,
+      d3: item.d3 === 0 ? 10 : item.d3 === 1 ? 20 : item.d3 * 10 + 10,
+      d4: item.d4 === 0 ? 10 : item.d4 === 1 ? 20 : item.d4 * 10 + 10,
+      d5: item.d5 === 0 ? 10 : item.d5 === 1 ? 20 : item.d5 * 10 + 10,
+      d6: item.d6 === 0 ? 10 : item.d6 === 1 ? 20 : item.d6 * 10 + 10,
+      d7: item.d7 === 0 ? 10 : item.d7 === 1 ? 20 : item.d7 * 10 + 10,
+      d8: item.d8 === 0 ? 10 : item.d8 === 1 ? 20 : item.d8 * 10 + 10,
+      d9: item.d9 === 0 ? 10 : item.d9 === 1 ? 20 : item.d9 * 10 + 10,
+    }));
+
+    var width = "100%";
+    var height = 220;
+
+    let grafico = d3
+      .select("#graficoSubsIncidencias")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    let barsD1 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD2 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD3 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD4 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD5 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD6 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD7 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD8 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    let barsD9 = grafico.selectAll("#bars").data(newArray).enter().append("g");
+
+    barsD1
+      .append("rect")
+      .attr("y", (d, i) => {
+        return 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d1)
+      .attr("fill", "#1463A7");
+
+    barsD2
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d2)
+      .attr("fill", "#4BB11F");
+
+    barsD3
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d3)
+      .attr("fill", "#E86139");
+
+    barsD4
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d4)
+      .attr("fill", "#3B86DE");
+
+    barsD5
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d5)
+      .attr("fill", "#6B42B6");
+
+    barsD6
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d6)
+      .attr("fill", "#EBB80C");
+
+    barsD7
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d7)
+      .attr("fill", "#E238D5");
+
+    barsD8
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + d.d7 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d8)
+      .attr("fill", "#A138E2");
+
+    barsD9
+      .append("rect")
+      .attr("y", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + d.d7 + d.d8 + 10;
+      })
+      .attr("x", (d, i) => {
+        return -i * 50 - 70;
+      })
+      .attr("transform", `rotate(${-90})`)
+      .attr("width", 35)
+      .attr("height", (d) => d.d9)
+      .attr("fill", "#31830D");
+
+    barsD1
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d1;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD2
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d2;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD3
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d3;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD4
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d4;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD5
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d5;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD6
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d6;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD7
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + d.d7 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d7;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD8
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + d.d7 + d.d8 / 2 + 8;
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d8;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+
+    barsD9
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 50 + 55;
+      })
+      .attr("x", (d, i) => {
+        return (
+          d.d1 + d.d2 + d.d3 + d.d4 + d.d5 + d.d6 + d.d7 + d.d8 + d.d9 / 2 + 8
+        );
+      })
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        let base = d.d9;
+
+        if (base === 10) {
+          return "";
+        } else if (base === 20) {
+          return 1;
+        } else {
+          return base / 10 - 1;
+        }
+      });
+  </script>
+</body>
