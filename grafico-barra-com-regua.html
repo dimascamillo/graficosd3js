@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  .separate {
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div id="graficoSubsIncidencias"></div>
+  <script src="d3.v7.js"></script>
+  <script>
+    let containerId = "#graficoSubsIncidencias";
+    let dataQtdOnibus = [
+      {
+        name: "CARSA",
+        ativo: 78,
+      },
+      {
+        name: "CCA",
+        ativo: 0,
+      },
+      {
+        name: "CEA",
+        ativo: 100,
+      },
+      {
+        name: "CISA",
+        ativo: 50,
+      },
+      {
+        name: "COPATTSA",
+        ativo: 150,
+      },
+      {
+        name: "CCT",
+        ativo: 500,
+      },
+      {
+        name: "CAISU",
+        ativo: 450,
+      },
+      {
+        name: "CCA",
+        ativo: 1000,
+      },
+      {
+        name: "CCAASDA",
+        ativo: 10,
+      },
+      {
+        name: "CCA",
+        ativo: 250,
+      },
+      {
+        name: "CCA",
+        ativo: 300,
+      },
+      {
+        name: "CCA",
+        ativo: 450,
+      },
+      {
+        name: "CCA",
+        ativo: 700,
+      },
+      {
+        name: "CASDASDCA",
+        ativo: 20000,
+      },
+    ];
+    const reguaEscalasGraficoArray = [
+      1000, 500, 100,
+    ];
+    var width = dataQtdOnibus.length * 83;
+    var height = 500;
+
+    const interaArrayDataQtdOnibus =
+      dataQtdOnibus.map((data) => {
+        return data.ativo;
+      });
+
+    const escalaGraficoOperadoresPorEmpresa = d3
+      .scaleLinear()
+      .domain([
+        d3.min(interaArrayDataQtdOnibus),
+        d3.max(interaArrayDataQtdOnibus),
+      ])
+      .range([0, 2000]);
+
+    let grafico = d3
+      .select(containerId)
+      .append("svg")
+      .attr("id", "grafico")
+      .attr("width", width < 500 ? 700 : width)
+      .attr("height", height);
+
+    let reguaGraficoEscala = grafico
+      .selectAll("#reguaEscalaGraficoEscala")
+      .data(reguaEscalasGraficoArray)
+      .enter()
+      .append("g")
+      .attr("class", "regua");
+
+    let barsAtivo = grafico
+      .selectAll(
+        "#chartQtdAutobusesPorEmpresaAtivos",
+      )
+      .data(dataQtdOnibus)
+      .enter()
+      .append("g");
+
+    let graficoLegendas = grafico
+      .selectAll(
+        "#legendasQtdAutobusesPorEmpresa",
+      )
+      .data(dataQtdOnibus)
+      .enter()
+      .append("g");
+
+    reguaGraficoEscala
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 45 + 90;
+      })
+      .attr("x", 30)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "600")
+      .attr("font-style", "italic")
+      .text((d) => d);
+
+    reguaGraficoEscala
+      .append("rect")
+      .attr("y", (d, i) => {
+        return i * 45 + 86;
+      })
+      .attr("x", 50)
+      .attr("width", "100%")
+      .attr("height", 1)
+      .attr("fill", "#70707080");
+
+    barsAtivo
+      .append("rect")
+      .attr("y", -190)
+      .attr("x", (d, i) => {
+        return -i * 80 - 80;
+      })
+      .attr("transform", `rotate(${180})`)
+      .attr("width", 18)
+      .attr("height", (d) => {
+        return (
+          escalaGraficoOperadoresPorEmpresa(
+            d.ativo,
+          ) + "px"
+        );
+      })
+      .attr("fill", "#31CAA7");
+
+    barsAtivo
+      .append("text")
+      .attr("y", (d) => {
+        if (d.ativo <= 50) {
+          return 193 + (-1 * d.ativo - 50) / 5;
+        } else if (d.ativo <= 100) {
+          return 193 + (-1 * d.ativo - 190) / 10;
+        } else {
+          return 80;
+        }
+      })
+      .attr("x", (d, i) => {
+        return i * 80 + 70;
+      })
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-size", "9px")
+      .attr("font-weight", "600")
+      .attr("font-style", "italic")
+      .text((d) => {
+        if (d.ativo === 0) {
+          return "";
+        } else {
+          return d.ativo;
+        }
+      });
+
+    graficoLegendas
+      .append("text")
+      .attr("y", 210)
+      .attr("x", (d, i) => {
+        return i * 80 + 70;
+      })
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .style("font-weight", "600")
+      .attr("font-size", "9px")
+      .text((d) => d.name);
+
+    let separate = grafico
+      .append("g")
+      .attr("class", "separate");
+
+    separate
+      .append("rect")
+      .attr("x", 20)
+      .attr("y", 190)
+      .attr("width", "100%")
+      .attr("height", 2)
+      .attr("fill", "#707070");
+  </script>
+</body>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  #empresaMarcaModeloContainer {
+    max-height: 410px;
+    overflow: auto;
+  }
+
+  .separate {
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div id="empresaMarcaModeloContainer"></div>
+  <script src="d3.v7.js"></script>
+  <script>
+    var dataTipoTecnologia = [
+      {
+        nome: "Teste 1",
+        valor: 500,
+      },
+      {
+        valor: 200,
+        nome: "Teste 2",
+      },
+      {
+        valor: 100,
+        nome: "Teste 3",
+      },
+      {
+        valor: 80,
+        nome: "Teste 4",
+      },
+      {
+        valor: 70,
+        nome: "Teste 5",
+      },
+      {
+        valor: 60,
+        nome: "Teste 6",
+      },
+      {
+        valor: 40,
+        nome: "Teste 7",
+      },
+      {
+        valor: 10,
+        nome: "Teste 8",
+      },
+      {
+        valor: 9,
+        nome: "Teste 9",
+      },
+      {
+        valor: 1,
+        nome: "Teste 10",
+      },
+      {
+        valor: 0,
+        nome: "Teste 1",
+      },
+    ];
+
+    let contadorGrafico = 1;
+
+    let containerId =
+      "#empresaMarcaModeloContainer";
+    d3.select("#empresaMarcaModeloContainer")
+      .selectAll("svg")
+      .remove();
+
+    var alturaDoGrafico = 1000;
+    var larguraTotal = 400;
+    var alturaTotal = alturaDoGrafico;
+
+    //color gradient
+    var myColor = d3
+      .scaleLinear()
+      .domain([0, 800])
+      .range(["#DECCEA", "#7907C1"]);
+
+    contadorGrafico++;
+
+    var svg = d3
+      .select(containerId)
+      .append("svg")
+      .attr(
+        "id",
+        "graficoTipoTecnologia",
+        contadorGrafico,
+      )
+      .attr("width", larguraTotal)
+      .attr("height", alturaTotal)
+      .append("g");
+
+    //adicionando  as barras
+    svg
+      .selectAll("rect")
+      .data(dataTipoTecnologia)
+      .enter()
+      .append("rect")
+      .attr("class", "barra")
+      .attr("x", 50)
+      .attr("width", function (d) {
+        if (d.valor >= 300) {
+          return 300;
+        } else if (d.valor === 0) {
+          return 1;
+        } else {
+          return d.valor;
+        }
+      })
+      .attr("height", 15)
+
+      .attr("y", function (d, i) {
+        return i * 30;
+      })
+
+      .attr("fill", function (d) {
+        return myColor(d.valor);
+      });
+
+    // Adicione os números aos retângulos
+    svg
+      .selectAll("text")
+      .data(dataTipoTecnologia)
+      .enter()
+      .append("text")
+      .attr("x", function (d) {
+        if (d.valor >= 300) {
+          return 360;
+        } else {
+          return d.valor + 60;
+        }
+      })
+      .attr("y", function (d, i) {
+        return i * 30 + 8;
+      })
+      .text(function (d) {
+        return d.valor;
+      })
+      .attr("alignment-baseline", "middle")
+      .style("fill", "#Fff")
+      .attr("font-size", "10px")
+      .attr("font-weight", "600");
+
+    let graficoLegendas = svg
+      .selectAll("#legendasPromedio")
+      .data(dataTipoTecnologia)
+      .enter()
+      .append("g")
+      .attr("fill", "white");
+
+    graficoLegendas
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 30 + 11;
+      })
+      .attr("x", 20)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .style("font-weight", "600")
+      .attr("font-size", "10px")
+      .text((d) => d.nome.substring(0, 8));
+  </script>
+</body>
