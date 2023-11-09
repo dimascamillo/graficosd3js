@@ -41,7 +41,7 @@
         ativo: 450,
       },
       {
-        name: "CCA",
+        name: "CCASEA",
         ativo: 1000,
       },
       {
@@ -49,19 +49,19 @@
         ativo: 10,
       },
       {
-        name: "CCA",
+        name: "CC1asA",
         ativo: 250,
       },
       {
-        name: "CCA",
+        name: "CC11A",
         ativo: 300,
       },
       {
-        name: "CCA",
+        name: "CC867A",
         ativo: 450,
       },
       {
-        name: "CCA",
+        name: "CCa1A",
         ativo: 700,
       },
       {
@@ -69,24 +69,20 @@
         ativo: 20000,
       },
     ];
-    const reguaEscalasGraficoArray = [
-      1000, 500, 100,
-    ];
+    const reguaEscalasGraficoArray = [1000, 500, 100];
     var width = dataQtdOnibus.length * 83;
     var height = 500;
 
-    const interaArrayDataQtdOnibus =
-      dataQtdOnibus.map((data) => {
-        return data.ativo;
-      });
+    const data = dataQtdOnibus.filter((objeto) => objeto.ativo !== 0);
+
+    const interandoArrayData = data.map((item) => {
+      return item.ativo;
+    });
 
     const escalaGraficoOperadoresPorEmpresa = d3
       .scaleLinear()
-      .domain([
-        d3.min(interaArrayDataQtdOnibus),
-        d3.max(interaArrayDataQtdOnibus),
-      ])
-      .range([0, 2000]);
+      .domain([d3.min(interandoArrayData), d3.max(interandoArrayData)])
+      .range([0, 800]);
 
     let grafico = d3
       .select(containerId)
@@ -102,26 +98,14 @@
       .append("g")
       .attr("class", "regua");
 
-    let barsAtivo = grafico
-      .selectAll(
-        "#chartQtdAutobusesPorEmpresaAtivos",
-      )
-      .data(dataQtdOnibus)
-      .enter()
-      .append("g");
+    let barsAtivo = grafico.selectAll("#chartQtdAutobusesPorEmpresaAtivos").data(data).enter().append("g");
 
-    let graficoLegendas = grafico
-      .selectAll(
-        "#legendasQtdAutobusesPorEmpresa",
-      )
-      .data(dataQtdOnibus)
-      .enter()
-      .append("g");
+    let graficoLegendas = grafico.selectAll("#legendasQtdAutobusesPorEmpresa").data(data).enter().append("g");
 
     reguaGraficoEscala
       .append("text")
       .attr("y", (d, i) => {
-        return i * 45 + 90;
+        return i * 50 + 75;
       })
       .attr("x", 30)
       .attr("text-anchor", "middle")
@@ -134,7 +118,7 @@
     reguaGraficoEscala
       .append("rect")
       .attr("y", (d, i) => {
-        return i * 45 + 86;
+        return i * 50 + 75;
       })
       .attr("x", 50)
       .attr("width", "100%")
@@ -150,23 +134,23 @@
       .attr("transform", `rotate(${180})`)
       .attr("width", 18)
       .attr("height", (d) => {
-        return (
-          escalaGraficoOperadoresPorEmpresa(
-            d.ativo,
-          ) + "px"
-        );
+        if (d.ativo <= 100) {
+          return d.ativo / 10 + 3;
+        } else if (d.ativo >= 101 && d.ativo <= 500) {
+          return d.ativo / 10 + 3;
+        } else {
+          return 110;
+        }
       })
       .attr("fill", "#31CAA7");
 
     barsAtivo
       .append("text")
       .attr("y", (d) => {
-        if (d.ativo <= 50) {
-          return 193 + (-1 * d.ativo - 50) / 5;
-        } else if (d.ativo <= 100) {
-          return 193 + (-1 * d.ativo - 190) / 10;
+        if (d.ativo <= 100) {
+          return (-1 * d.ativo) / 5 + 190;
         } else {
-          return 80;
+          return 193 - d.ativo;
         }
       })
       .attr("x", (d, i) => {
@@ -177,13 +161,7 @@
       .attr("font-size", "9px")
       .attr("font-weight", "600")
       .attr("font-style", "italic")
-      .text((d) => {
-        if (d.ativo === 0) {
-          return "";
-        } else {
-          return d.ativo;
-        }
-      });
+      .text((d) => d.ativo);
 
     graficoLegendas
       .append("text")
@@ -197,9 +175,7 @@
       .attr("font-size", "9px")
       .text((d) => d.name);
 
-    let separate = grafico
-      .append("g")
-      .attr("class", "separate");
+    let separate = grafico.append("g").attr("class", "separate");
 
     separate
       .append("rect")

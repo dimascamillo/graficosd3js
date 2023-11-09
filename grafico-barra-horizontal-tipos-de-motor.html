@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  #empresaMarcaModeloContainer {
+    max-height: 410px;
+    overflow: auto;
+  }
+
+  .separate {
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div id="empresaMarcaModeloContainer"></div>
+  <script src="d3.v7.js"></script>
+  <script>
+    let data = [
+      {
+        nomeEmpresa: "Teste 1",
+        tiposMotor: [
+          {
+            tipoMotor: "teste motor 1",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 2",
+            quantidade: 333,
+          },
+          {
+            tipoMotor: "teste motor 3",
+            quantidade: 7,
+          },
+          {
+            tipoMotor: "teste motor 4",
+            quantidade: 200,
+          },
+        ],
+      },
+      {
+        nomeEmpresa: "Teste 2",
+        tiposMotor: [
+          {
+            tipoMotor: "teste motor 5",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 6",
+            quantidade: 333,
+          },
+          {
+            tipoMotor: "teste motor 7",
+            quantidade: 7,
+          },
+          {
+            tipoMotor: "teste motor 8",
+            quantidade: 200,
+          },
+          {
+            tipoMotor: "teste motor 8",
+            quantidade: 200,
+          },
+          {
+            tipoMotor: "teste motor 8",
+            quantidade: 200,
+          },
+          {
+            tipoMotor: "teste motor 8",
+            quantidade: 200,
+          },
+        ],
+      },
+      {
+        nomeEmpresa: "Teste 3",
+        tiposMotor: [
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+        ],
+      },
+      {
+        nomeEmpresa: "Teste 4",
+        tiposMotor: [
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+          {
+            tipoMotor: "teste motor 9",
+            quantidade: 12,
+          },
+        ],
+      },
+    ];
+    let displayedCompanies = {};
+    let flatData = data.flatMap((item) =>
+      item.tiposMotor.map((motor) => ({
+        nomeEmpresa: item.nomeEmpresa,
+        tipoMotor: motor.tipoMotor,
+        quantidade: motor.quantidade,
+      })),
+    );
+
+    console.log(flatData);
+
+    let contadorGrafico = 1;
+
+    var width = 1000;
+    var height = 5000;
+
+    let grafico = d3.select("#empresaMarcaModeloContainer").append("svg").attr("width", width).attr("height", height);
+
+    let currentCompanyIndex = 0;
+
+    let bars = grafico
+      .selectAll("g")
+      .data(flatData)
+      .enter()
+      .append("g")
+      .attr("transform", (d, i) => {
+        if (!displayedCompanies[d.nomeEmpresa]) {
+          displayedCompanies[d.nomeEmpresa] = true;
+          currentCompanyIndex++;
+        }
+        return "translate(0," + currentCompanyIndex * 40 + ")";
+      });
+
+    bars
+      .append("rect")
+      .attr("y", (d, i) => {
+        return i * 40;
+      })
+      .attr("x", 10)
+      .attr("width", (d) => d.quantidade)
+      .attr("height", 10)
+      .attr("fill", "#CE02FA");
+
+    bars
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 40 + 8;
+      })
+      .attr("x", (d) => d.quantidade + 15)
+      .attr("fill", "white")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .text((d) => d.quantidade);
+
+    bars
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 40 - 7;
+      })
+      .attr("x", 10)
+      .attr("fill", "#829596")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .text((d) => d.tipoMotor.toUpperCase());
+
+    bars
+      .append("text")
+      .attr("y", (d, i) => {
+        return i * 40 - 20;
+      })
+      .attr("x", 10)
+      .attr("fill", "black")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .text((d) => {
+        if (displayedCompanies[d.nomeEmpresa]) {
+          displayedCompanies[d.nomeEmpresa] = false; // reset the flag
+          return d.nomeEmpresa.toUpperCase();
+        } else {
+          return "";
+        }
+      });
+  </script>
+</body>
